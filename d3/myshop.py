@@ -13,12 +13,11 @@ def home():
 ## API 
 @app.route('/order', methods=['POST'])
 def write_order():
-    # 1. 클라이언트가 준 title, author, review 가져오기.
     order_name = request.form['order_name']
     order_count = request.form['order_count']
     order_address = request.form['order_address']
     order_phone = request.form['order_phone']
-	# 2. DB에 정보 삽입하기
+	# 2. insert to db 
     order = {
         'name' : order_name, 
         'count' : order_count,
@@ -33,10 +32,10 @@ def write_order():
 
 @app.route('/order', methods=['GET'])
 def read_order():
-    # 1. 모든 reviews의 문서를 가져온 후 list로 변환합니다.
+    # 1. 모든 orders 를 가져온 후 list로 변환합니다.
     orders = list(db.order.find({},{'_id':0}))
     print(orders)
-	# 2. 성공 메시지와 함께 리뷰를 보냅니다.
+	# 2. 성공 메시지와 함께 주문을 보냅니다.
     return jsonify({'result':'success', 'orders': orders})
 
 
